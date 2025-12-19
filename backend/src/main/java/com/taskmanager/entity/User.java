@@ -1,11 +1,13 @@
 package com.taskmanager.entity;
 
-import com.taskmanager.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,6 +23,6 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
     private String email;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<ProjectMembership> projectMemberships = new HashSet<>();
 }

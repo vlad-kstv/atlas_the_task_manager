@@ -2,8 +2,17 @@ package com.taskmanager.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity(name = "project_memberships")
+@Entity
+@Table(name = "project_memberships")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectMembership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
