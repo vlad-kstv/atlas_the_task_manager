@@ -16,64 +16,48 @@ const items: MenuItem[] = [
   {
     key: '1',
     icon: <MailOutlined />,
-    label: 'Navigation One',
+    label: 'Dashboard',
   },
   {
     key: '2',
     icon: <CalendarOutlined />,
-    label: 'Navigation Two',
-  },
-  {
-    key: 'sub1',
-    label: 'Navigation Two',
-    icon: <AppstoreOutlined />,
+    label: 'Projects',
     children: [
-      { key: '3', label: 'Option 3' },
-      { key: '4', label: 'Option 4' },
-      {
-        key: 'sub1-2',
-        label: 'Submenu',
-        children: [
-          { key: '5', label: 'Option 5' },
-          { key: '6', label: 'Option 6' },
-        ],
-      },
-    ],
+      { key: "2-1", label: "Create new project" },
+      { key: '2-2', label: "Your projects", type: "group", children: [{key: "1-1", label: "test projcet"}]},
+    ]
   },
   {
-    key: 'sub2',
-    label: 'Navigation Three',
-    icon: <SettingOutlined />,
+    key: '3',
+    icon: <CalendarOutlined />,
+    label: 'Starred',
     children: [
-      { key: '7', label: 'Option 7' },
-      { key: '8', label: 'Option 8' },
-      { key: '9', label: 'Option 9' },
-      { key: '10', label: 'Option 10' },
-    ],
-  },
-  {
-    key: 'link',
-    icon: <LinkOutlined />,
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Ant Design
-      </a>
-    ),
+      { key: '3-1', label: "starred project" }
+    ]
   },
 ];
+
+const onClick: MenuProps['onClick'] = (e) => {
+  console.log('click', e);
+};
 
 export default function Navbar() {
   return (
     <>
-      <Title className='navbar-atlas-title' level={2}>Atlas</Title>
-      <Menu
-        style={{ width: 256 }}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode='vertical'
-        theme='light'
-        items={items}
-      />
-    </>
+      <div className='navbar'>
+        <div style={{ padding: '16px 24px' }}>
+          <Title className='navbar-atlas-title' level={2} style={{ margin: 0 }}>Atlas</Title>
+        </div>
+        <Menu
+          style={{ borderRight: 'none' }}
+          onClick={onClick}
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+          mode='vertical'
+          theme='light'
+          items={items}
+        />
+      </div>
+   </>
   )
 }

@@ -3,6 +3,7 @@ import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
 import App from '../pages/App';
 import RegisterPage from '../pages/RegisterPage';
+import CreateProjectPage from '../pages/CreateProjectPage';
 
 interface RouteItem {
     path : string,
@@ -14,6 +15,7 @@ const PATHS = {
     LOGIN: '/login',
     REGISTER: '/register',
     DASHBOARD: '/dashboard',
+    CREATE_PROJECT_PAGE: 'create-project-page', 
 }
 
 const routes : RouteItem[] = [
@@ -32,6 +34,10 @@ const routes : RouteItem[] = [
     {
         path: PATHS.REGISTER,
         element: <RegisterPage/>
+    },
+    {
+        path: PATHS.CREATE_PROJECT_PAGE,
+        element: <CreateProjectPage/>
     }
 ]
 
