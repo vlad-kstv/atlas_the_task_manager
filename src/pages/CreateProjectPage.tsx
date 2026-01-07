@@ -1,5 +1,9 @@
-import { Button, Form, Input, Mentions, Transfer } from "antd";
-import Checkbox from "antd/es/checkbox/Checkbox";
+import { Button, Form, Input } from "antd";
+
+
+const onFinish = (values : any) => {
+    // SENDS ALL VALUES
+};
 
 export default function CreateProjectPage() {
 
@@ -11,6 +15,7 @@ export default function CreateProjectPage() {
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: 600 }}
                 initialValues={{ remember: true }}
+                onFinish={onFinish}
                 autoComplete="off"
             >
                 <Form.Item<string>
@@ -24,13 +29,6 @@ export default function CreateProjectPage() {
                 <Form.Item<string>
                     label="Description"
                     name="description"
-                >
-                <Input />
-                </Form.Item>
-
-                <Form.Item<string>
-                    label="Additional members: "
-                    name="members"
                 >
                 <Input />
                 </Form.Item>

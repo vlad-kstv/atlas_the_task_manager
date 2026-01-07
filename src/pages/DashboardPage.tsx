@@ -11,6 +11,7 @@ export default function DashboardPage() {
       </Sider>
 
       <Layout>
+        <h1>Recent</h1>
         <Content style={{ padding: '24px', background: '#f5f5f5' }}>
           <Flex gap="middle" wrap="wrap">
             <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
