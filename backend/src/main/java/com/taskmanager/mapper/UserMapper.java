@@ -5,11 +5,10 @@ import com.taskmanager.dto.UserResponseDto;
 import com.taskmanager.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 // componentModel = "spring" allows you to inject this mapper with @Autowired
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN, uses = {ProjectMembershipMapper.class})
+@Mapper(componentModel = "spring", uses = {ProjectMembershipMapper.class})
 public interface UserMapper {
 
     @Mapping(target = "passwordHash", ignore = true)

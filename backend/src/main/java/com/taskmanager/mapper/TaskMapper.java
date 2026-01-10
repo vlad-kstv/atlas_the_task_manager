@@ -8,7 +8,7 @@ import com.taskmanager.entity.User;
 import org.mapstruct.*;
 
 // componentModel = "spring" allows you to inject this mapper with @Autowired
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN)
+@Mapper(componentModel = "spring")
 public interface TaskMapper {
 
     @Mapping(target = "projectId", source = "project.id")
