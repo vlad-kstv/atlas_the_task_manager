@@ -17,6 +17,10 @@ public interface UserMapper {
     @Mapping(target = "passwordHash", source = "password", qualifiedByName = "toPasswordHash")
     User toEntity(UserRequestDto user);
 
+    @Mapping(target = "passwordHash", source = "password")
+    @Mapping(target = "id", ignore = true)
+    User updateUser(UserRequestDto dto);
+
     default String toPasswordHash(String password) {
         BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
         return crypt.encode(password);
