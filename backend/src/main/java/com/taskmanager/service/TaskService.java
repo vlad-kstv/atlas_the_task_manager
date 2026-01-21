@@ -23,41 +23,38 @@ public class TaskService {
 
     @Transactional
     public Task createTask(TaskRequestDto dto) {
-        log.info("Attempting to create a task with title: {}", dto.getTitle());
+        log.debug("Attempting to create a task with title: {}", dto.getTitle());
         Task task = mapper.toEntity(dto);
         Task savedTask = repository.save(task);
-        log.info("Task created");
+        log.info("Successfully created task with id: {}", savedTask.getId());
         return savedTask;
     }
     
     @Transactional
     public Task updateTask(Long id, TaskRequestDto dto) {
-        log.info("Attempting to update a task with title: {}", dto.getTitle());
+        log.debug("Attempting to update a task with id: {}", id);
         Task existingTask = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
         mapper.updateEntityFromDto(dto, existingTask);
         if(dto.getAssigneeId() != null) {
             User newAssignee = userRepository.findById(dto.getAssigneeId()).orElseThrow(() -> new EntityNotFoundException("User with id:" + id + " not found"));
             existingTask.setAssignee(newAssignee);
         }
-        log.info("Task updated");
+        log.info("Successfully updated task with id: {}", id);
         return existingTask;
     }
 
     @Transactional
     public Task getTaskById(Long id) {
-        log.info("Attempting to fetch a task with id: {}", id);
-        Task foundTask = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
-        log.info("Task found");
-        return foundTask;
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
     }
 
     @Transactional
     public void deleteTask(Long id) {
-        log.info("Attempting to delete a task with id: {}", id);
+        log.debug("Attempting to delete a task with id: {}", id);
         if(!repository.existsById(id)) {
             throw new EntityNotFoundException("Task with id:" + id + " not found");
         }
         repository.deleteById(id);
-        log.info("Task deleted");
+        log.info("Successfully deleted a task with id: {}", id);
     }
 }
