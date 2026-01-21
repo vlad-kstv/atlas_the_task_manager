@@ -6,6 +6,7 @@ import com.taskmanager.entity.Project;
 import com.taskmanager.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 // componentModel = "spring" allows you to inject this mapper with @Autowired
@@ -17,6 +18,10 @@ public interface ProjectMapper {
 
     @Mapping(target = "ownerId", source = "owner.id")
     ProjectResponseDto toDto(Project project);
+
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "memberships", ignore = true)
+    void updateEntityFromDto(ProjectRequestDto dto, @MappingTarget Project project);
 
     @Named("toUserEntity")
     default User toUserEntity(Long id){
