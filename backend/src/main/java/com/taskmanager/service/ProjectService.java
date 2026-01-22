@@ -21,7 +21,12 @@ public class ProjectService {
     @Transactional
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
+        System.out.println(dto.getName());
+        System.out.println(dto.getDescription());
         Project project = mapper.toEntity(dto);
+        System.out.println(project.getOwner().getId());
+        System.out.println(project.getName());
+        System.out.println(project.getDescription());
         Project createdProject = repository.save(project);
         log.info("Successfully created a project with id {}", createdProject.getId());
         return mapper.toDto(createdProject);
