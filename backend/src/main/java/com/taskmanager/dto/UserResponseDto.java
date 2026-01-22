@@ -13,5 +13,5 @@ public class UserResponseDto {
     private String username;
     @NotBlank(message = "email cannot be empty")
     private String email;
-    private Set<ProjectMembershipDto> projectMemberships = new HashSet<>();
+    // private Set<ProjectMembershipDto> projectMemberships = new HashSet<>();
 }

@@ -1,9 +1,14 @@
 package com.taskmanager.service;
 
+import com.taskmanager.dto.ProjectMembershipDto;
 import com.taskmanager.dto.ProjectRequestDto;
 import com.taskmanager.dto.ProjectResponseDto;
 import com.taskmanager.entity.Project;
+import com.taskmanager.entity.ProjectMembership;
+import com.taskmanager.entity.User;
 import com.taskmanager.mapper.ProjectMapper;
+import com.taskmanager.mapper.ProjectMembershipMapper;
+import com.taskmanager.repository.ProjectMembershipRepository;
 import com.taskmanager.repository.ProjectRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,25 +16,36 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository repository;
+    private final ProjectMembershipRepository membershipRepository;
+    private final ProjectMembershipMapper membershipMapper;
     private final ProjectMapper mapper;
 
     @Transactional
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
-        System.out.println(dto.getName());
-        System.out.println(dto.getDescription());
         Project project = mapper.toEntity(dto);
-        System.out.println(project.getOwner().getId());
-        System.out.println(project.getName());
-        System.out.println(project.getDescription());
         Project createdProject = repository.save(project);
         log.info("Successfully created a project with id {}", createdProject.getId());
         return mapper.toDto(createdProject);
+    }
+
+    @Transactional
+    public List<ProjectResponseDto> getUserProject(Long id) {
+        List<ProjectMembership> foundProjects = membershipRepository.findAllByMemberId(id);
+        return foundProjects.stream()
+                .map((membership -> {
+                    Project project = membership.getProject();
+                    return mapper.toDto(project);
+                }))
+                .collect(Collectors.toList());
     }
 
     @Transactional

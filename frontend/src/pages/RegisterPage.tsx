@@ -1,9 +1,9 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Flex, Form, Input } from 'antd';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from 'antd';
 import './styles/AuthForm.css';
 import Title from 'antd/es/typography/Title';
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
     };
@@ -25,6 +25,12 @@ export default function LoginPage() {
                     <Input prefix={<UserOutlined />} placeholder="Username" />
                 </Form.Item>
                 <Form.Item
+                    name="email"
+                    rules={[{ required: true, message: 'Please input your Email!' }]}
+                >
+                    <Input prefix={<MailOutlined />} placeholder="Email" />
+                </Form.Item>
+                <Form.Item
                     name="password"
                     rules={[{ required: true, message: 'Please input your Password!' }]}
                 >
@@ -33,9 +39,9 @@ export default function LoginPage() {
 
                 <Form.Item>
                     <Button block type="primary" htmlType="submit">
-                    Log in
+                    Register
                     </Button>
-                    or <a href="">Register now!</a>
+                    or <a href="">Log in now!</a>
                 </Form.Item>
             </Form>
         </div>

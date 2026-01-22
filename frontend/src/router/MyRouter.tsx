@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
 import App from '../pages/App';
+import RegisterPage from '../pages/RegisterPage';
+import CreateProjectPage from '../pages/CreateProjectPage';
 
 interface RouteItem {
     path : string,
@@ -11,7 +13,9 @@ interface RouteItem {
 const PATHS = {
     HOME: '/',
     LOGIN: '/login',
+    REGISTER: '/register',
     DASHBOARD: '/dashboard',
+    CREATE_PROJECT_PAGE: 'create-project-page', 
 }
 
 const routes : RouteItem[] = [
@@ -26,6 +30,14 @@ const routes : RouteItem[] = [
     {
         path: PATHS.DASHBOARD,
         element: <DashboardPage/>
+    },
+    {
+        path: PATHS.REGISTER,
+        element: <RegisterPage/>
+    },
+    {
+        path: PATHS.CREATE_PROJECT_PAGE,
+        element: <CreateProjectPage/>
     }
 ]
 

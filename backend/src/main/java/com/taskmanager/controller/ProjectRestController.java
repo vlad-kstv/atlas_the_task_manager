@@ -2,9 +2,7 @@ package com.taskmanager.controller;
 
 import com.taskmanager.dto.ProjectRequestDto;
 import com.taskmanager.dto.ProjectResponseDto;
-import com.taskmanager.entity.User;
 import com.taskmanager.service.ProjectService;
-import com.taskmanager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,5 +18,10 @@ public class ProjectRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectResponseDto createProject(@RequestBody ProjectRequestDto dto){
         return service.createProject(dto);
+    }
+
+    @GetMapping("/users/{userId}/projects")
+    public ProjectResponseDto getProjectByUserId(@PathVariable Long userId) {
+        return service.getProjectById(userId);
     }
 }

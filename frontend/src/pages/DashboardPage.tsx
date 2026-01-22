@@ -1,77 +1,41 @@
+import { useEffect } from 'react';
+import Navbar from '../components/layout/Navbar';
+import { Card, Layout, Flex } from 'antd';
+import { ProjectService } from '../api/projectService';
 
-import {
-  AppstoreOutlined,
-  CalendarOutlined,
-  LinkOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
-import { Menu } from 'antd';
-import type { GetProp, MenuProps } from 'antd';
-
-type MenuItem = GetProp<MenuProps, 'items'>[number];
-
-const items: MenuItem[] = [
-  {
-    key: '1',
-    icon: <MailOutlined />,
-    label: 'Navigation One',
-  },
-  {
-    key: '2',
-    icon: <CalendarOutlined />,
-    label: 'Navigation Two',
-  },
-  {
-    key: 'sub1',
-    label: 'Navigation Two',
-    icon: <AppstoreOutlined />,
-    children: [
-      { key: '3', label: 'Option 3' },
-      { key: '4', label: 'Option 4' },
-      {
-        key: 'sub1-2',
-        label: 'Submenu',
-        children: [
-          { key: '5', label: 'Option 5' },
-          { key: '6', label: 'Option 6' },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'sub2',
-    label: 'Navigation Three',
-    icon: <SettingOutlined />,
-    children: [
-      { key: '7', label: 'Option 7' },
-      { key: '8', label: 'Option 8' },
-      { key: '9', label: 'Option 9' },
-      { key: '10', label: 'Option 10' },
-    ],
-  },
-  {
-    key: 'link',
-    icon: <LinkOutlined />,
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Ant Design
-      </a>
-    ),
-  },
-];
+const { Sider, Content } = Layout;
 
 export default function DashboardPage() {
+
+  useEffect(() => {
+    const data = ProjectService.getProjectsByUserId(1);
+    console.log(data);
+  }, []);
+
   return (
-    <>
-      <Menu
-        style={{ width: 256 }}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode='vertical'
-        theme='light'
-        items={items}
-      />
-    </>
-  )
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider theme="light" width={256} style={{ borderRight: '1px solid #f0f0f0' }}>
+        <Navbar />
+      </Sider>
+
+      <Layout>
+        <h1>Recent</h1>
+        <Content style={{ padding: '24px', background: '#f5f5f5' }}>
+          <Flex gap="middle" wrap="wrap">
+            <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
+              <p>Card content</p>
+            </Card>
+            
+            <Card title="Second card" extra={<a href="#">More</a>} style={{ width: 300 }}>
+              <p>More content</p>
+            </Card>
+
+            <Card title="Third card" extra={<a href="#">More</a>} style={{ width: 300 }}>
+              <p>Even more content</p>
+            </Card>
+          </Flex>
+        </Content>
+      </Layout>
+    </Layout>
+  );
 }
