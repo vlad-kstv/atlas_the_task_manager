@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class ProjectRestController {
     }
 
     @GetMapping("/users/{userId}/projects")
-    public ProjectResponseDto getProjectByUserId(@PathVariable Long userId) {
-        return service.getProjectById(userId);
+    public List<ProjectResponseDto> getUserProjects(@PathVariable Long userId) {
+        return service.getUserProject(userId);
     }
 }
