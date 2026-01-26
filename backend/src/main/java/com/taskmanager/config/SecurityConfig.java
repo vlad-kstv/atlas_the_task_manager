@@ -12,9 +12,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(csrf -> csrf.disable()) // Отключаем CSRF, который обычно дает 403
+        http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll() // Разрешаем всё остальное
+                    .anyRequest().permitAll()
             );
         return http.build();
     }
