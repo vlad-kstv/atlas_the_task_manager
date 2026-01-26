@@ -1,16 +1,21 @@
 package com.taskmanager.service;
 
 import com.taskmanager.dto.TaskRequestDto;
+import com.taskmanager.dto.TaskResponseDto;
 import com.taskmanager.entity.Task;
 import com.taskmanager.entity.User;
 import com.taskmanager.mapper.TaskMapper;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.TransactionScoped;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,16 +27,16 @@ public class TaskService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Task createTask(TaskRequestDto dto) {
+    public TaskResponseDto createTask(TaskRequestDto dto) {
         log.debug("Attempting to create a task with title: {}", dto.getTitle());
         Task task = mapper.toEntity(dto);
         Task savedTask = repository.save(task);
         log.info("Successfully created task with id: {}", savedTask.getId());
-        return savedTask;
+        return mapper.toDto(task);
     }
     
     @Transactional
-    public Task updateTask(Long id, TaskRequestDto dto) {
+    public TaskResponseDto updateTask(Long id, TaskRequestDto dto) {
         log.debug("Attempting to update a task with id: {}", id);
         Task existingTask = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
         mapper.updateEntityFromDto(dto, existingTask);
@@ -40,12 +45,21 @@ public class TaskService {
             existingTask.setAssignee(newAssignee);
         }
         log.info("Successfully updated task with id: {}", id);
-        return existingTask;
+        return mapper.toDto(existingTask);
     }
 
     @Transactional
-    public Task getTaskById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
+    public TaskResponseDto getTaskById(Long id) {
+        Task existingTask = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task with id:" + id + " not found"));
+        return mapper.toDto(existingTask);
+    }
+
+    @Transactional
+    public List<TaskResponseDto> getTasksByProjectId(Long projectId) {
+        List<Task> tasks = repository.findAllByProjectId(projectId);
+        return tasks.stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional
