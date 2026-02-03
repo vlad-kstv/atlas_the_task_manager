@@ -1,6 +1,7 @@
 package com.taskmanager.service;
 
 import com.taskmanager.dto.UserRequestDto;
+import com.taskmanager.dto.UserResponseDto;
 import com.taskmanager.entity.User;
 import com.taskmanager.mapper.UserMapper;
 import com.taskmanager.repository.UserRepository;
@@ -19,33 +20,31 @@ public class UserService {
     private final UserMapper mapper;
 
     @Transactional
-    public User getUserById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id:" + id + "not found"));
+    public UserResponseDto getUserById(Long id) {
+        User foundUser = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id:" + id + "not found"));
+        return mapper.toDto(foundUser);
     }
 
     @Transactional
-    public User createUser(UserRequestDto dto) {
+    public UserResponseDto createUser(UserRequestDto dto) {
         log.debug("Attempting to create a user with username: {}", dto.getUsername());
-
         User user = mapper.toEntity(dto);
-
         if(repository.existsByUsername(user.getUsername())){
             log.error("User with username: {} is already exists", user.getUsername());
-            return user;
+            return mapper.toDto(user);
         }
-
         User savedUser = repository.save(user);
         log.info("Successfully created a user with username: {} and id {}", savedUser.getUsername(), savedUser.getId());
-        return savedUser;
+        return mapper.toDto(savedUser);
     }
 
     @Transactional
-    public User updateUser(Long id, UserRequestDto dto) {
+    public UserResponseDto updateUser(Long id, UserRequestDto dto) {
         log.debug("Attempting to update a user with id: {}", id);
         User existingUser = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id:" + id + " not found"));
         User updatedUser = mapper.updateUser(dto);
         log.info("Successfully updated user with id: {}", id);
-        return updatedUser;
+        return mapper.toDto(updatedUser);
     }
 
     @Transactional
