@@ -20,6 +20,10 @@ public class ProjectRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto dto){
+        // temporary fix
+        if(dto.getOwnerId() == null) {
+            dto.setOwnerId(1L);
+        }
         ProjectResponseDto response = service.createProject(dto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
