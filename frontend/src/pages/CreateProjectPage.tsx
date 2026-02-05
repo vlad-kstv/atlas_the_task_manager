@@ -1,10 +1,20 @@
+import { ProjectService } from "@/api/projectService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { projectRequestDto } from "@/types/project";
+import { useState } from "react";
 
 export default function CreateProjectPage() {
+    const [projectName, setProjectName] = useState<string>("");
+    const [projectDescription, setProjectDescription] = useState<string>("");
 
-    const onSubmit = () => {
+    const handleSubmit = () => {
+        const dto : projectRequestDto = {
+            name: projectName,
+            description: projectDescription
+        }
 
+        ProjectService.createProject(dto);
     }
 
     return (
@@ -13,10 +23,10 @@ export default function CreateProjectPage() {
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                 New project:
             </h3>
-            <Input placeholder="Enter project name" />
-            <Input placeholder="Enter description" />
+            <Input placeholder="Enter project name" onChange={(e) => {setProjectName(e.target.value)}}/>
+            <Input placeholder="Enter description" onChange={(e) => {setProjectDescription(e.target.value)}}/>
             
-            <Button variant="outline" size="lg" className="cursor-pointer">
+            <Button variant="outline" size="lg" className="cursor-pointer" onClick={handleSubmit}>
                 Submit
             </Button>
         </div>
