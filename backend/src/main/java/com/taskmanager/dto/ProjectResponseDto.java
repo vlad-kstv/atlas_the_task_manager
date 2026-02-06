@@ -3,9 +3,6 @@ package com.taskmanager.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 public class ProjectResponseDto {
     @NotNull
@@ -15,5 +12,4 @@ public class ProjectResponseDto {
     private String description;
     @NotNull
     private Long ownerId;
-    private Set<UserResponseDto> members = new HashSet<>();
 }

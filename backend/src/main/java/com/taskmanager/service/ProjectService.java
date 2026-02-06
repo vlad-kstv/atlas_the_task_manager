@@ -10,6 +10,7 @@ import com.taskmanager.mapper.ProjectMapper;
 import com.taskmanager.mapper.ProjectMembershipMapper;
 import com.taskmanager.repository.ProjectMembershipRepository;
 import com.taskmanager.repository.ProjectRepository;
+import com.taskmanager.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,22 +24,23 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class ProjectService {
+    private final UserService userService;
     private final ProjectRepository repository;
     private final ProjectMembershipRepository membershipRepository;
-    private final ProjectMembershipMapper membershipMapper;
+    private final ProjectMembershipService projectMembershipService;
     private final ProjectMapper mapper;
 
     @Transactional
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
         Project project = mapper.toEntity(dto);
-        Project createdProject = repository.save(project);
-        log.info("Successfully created a project with id {}", createdProject.getId());
-        return mapper.toDto(createdProject);
+        ProjectMembership createdMembership = projectMembershipService.createProjectMembership(userService.getCurrentUser(), project);
+        log.info("Successfully created a new project membership with id {}", createdMembership.getId());
+        return mapper.toDto(createdMembership.getProject());
     }
 
     @Transactional
-    public List<ProjectResponseDto> getUserProject(Long id) {
+    public List<ProjectResponseDto> getUserProjects(Long id) {
         List<ProjectMembership> foundProjects = membershipRepository.findAllByMemberId(id);
         return foundProjects.stream()
                 .map((membership -> {

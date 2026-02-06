@@ -20,6 +20,11 @@ public class UserService {
     private final UserMapper mapper;
 
     @Transactional
+    public User getCurrentUser() {
+        return repository.findById(1L).orElseThrow(() -> new EntityNotFoundException("User with id: 1 not found"));
+    }
+
+    @Transactional
     public UserResponseDto getUserById(Long id) {
         User foundUser = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id:" + id + "not found"));
         return mapper.toDto(foundUser);

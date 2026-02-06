@@ -1,6 +1,7 @@
 package com.taskmanager.entity;
 
 
+import com.taskmanager.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,6 @@ public class ProjectMembership {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User member;
+
+    private Role role;
 }
