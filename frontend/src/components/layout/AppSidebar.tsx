@@ -1,4 +1,4 @@
-import { Home, Folder, Settings } from "lucide-react" // Иконки
+import { Home, Folder, Settings, MoreHorizontal, ChevronDown, Plus } from "lucide-react" // Иконки
 import {
   Sidebar,
   SidebarContent,
@@ -8,17 +8,22 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 
 export default function AppSidebar() {
 
   const menuItems = [
     { title: "Dashboard", url: "/dashboard", icon: Home },
-    { title: "Projects", url: "#", icon: Folder },
     { title: "Settings", url: "#", icon: Settings },
   ]
 
@@ -35,6 +40,36 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
+            <Collapsible className="group/collapsible">
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild className="cursor-pointer">
+                  <SidebarMenuButton>
+                    <Folder />
+                    <span>Projects</span>
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <a href="#">
+                          <span>BramBits</span>
+                        </a>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+
+                    <SidebarMenuSubItem className="cursor-pointer">
+                      <SidebarMenuSubButton>
+                        <Plus className="h-4 w-4" />
+                        <span>More spaces</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+
+              </SidebarMenuItem>
+            </Collapsible>
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
