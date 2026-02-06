@@ -19,8 +19,13 @@ import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
+import { useEffect, useState } from "react"
+import { ProjectService } from "@/api/projectService"
+import type { projectResponseDto } from "@/types/project"
 
 export default function AppSidebar() {
+
+  const [fetchedProjects, setFetchedProjects] = useState<projectResponseDto[]>([]);
 
   const menuItems = [
     { title: "Dashboard", url: "/dashboard", icon: Home },
@@ -28,6 +33,16 @@ export default function AppSidebar() {
   ]
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await ProjectService.getProjectsByUserId();
+      console.log(data);
+      setFetchedProjects(data);
+    }
+
+    fetchProjects();
+  }, [])
 
   return (
     <Sidebar>
