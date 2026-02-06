@@ -1,16 +1,12 @@
 package com.taskmanager.service;
 
-import com.taskmanager.dto.ProjectMembershipDto;
 import com.taskmanager.dto.ProjectRequestDto;
 import com.taskmanager.dto.ProjectResponseDto;
 import com.taskmanager.entity.Project;
 import com.taskmanager.entity.ProjectMembership;
-import com.taskmanager.entity.User;
 import com.taskmanager.mapper.ProjectMapper;
-import com.taskmanager.mapper.ProjectMembershipMapper;
 import com.taskmanager.repository.ProjectMembershipRepository;
 import com.taskmanager.repository.ProjectRepository;
-import com.taskmanager.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +30,8 @@ public class ProjectService {
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
         Project project = mapper.toEntity(dto);
-        ProjectMembership createdMembership = projectMembershipService.createProjectMembership(userService.getCurrentUser(), project);
+        Project savedProject = repository.save(project);
+        ProjectMembership createdMembership = projectMembershipService.createProjectMembership(userService.getCurrentUser(), savedProject);
         log.info("Successfully created a new project membership with id {}", createdMembership.getId());
         return mapper.toDto(createdMembership.getProject());
     }
