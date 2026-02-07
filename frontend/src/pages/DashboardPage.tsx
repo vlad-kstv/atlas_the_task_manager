@@ -12,8 +12,7 @@ import { ProjectService } from '../api/projectService';
 
 export default function DashboardPage() {
   useEffect(() => {
-    const data = ProjectService.getProjectsByUserId(
-      1);
+    const data = ProjectService.getProjectsByUserId();
     console.log(data);
   }, []);
 

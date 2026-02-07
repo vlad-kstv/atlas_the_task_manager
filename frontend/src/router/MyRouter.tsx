@@ -5,6 +5,7 @@ import App from '../pages/App';
 import RegisterPage from '../pages/RegisterPage';
 import CreateProjectPage from '../pages/CreateProjectPage';
 import Layout from '@/layout';
+import ProjectPage from '@/pages/ProjectPage';
 
 interface RouteItem {
     path : string,
@@ -16,7 +17,8 @@ const PATHS = {
     LOGIN: '/login',
     REGISTER: '/register',
     DASHBOARD: '/dashboard',
-    CREATE_PROJECT_PAGE: 'create-project', 
+    CREATE_PROJECT_PAGE: 'create-project',
+    PROJECT_PAGE: '/projects/:id',  
 }
 
 const routes : RouteItem[] = [
@@ -39,7 +41,11 @@ const routes : RouteItem[] = [
     {
         path: PATHS.CREATE_PROJECT_PAGE,
         element: <CreateProjectPage/>
-    }
+    },
+    {
+        path: PATHS.PROJECT_PAGE,
+        element: <ProjectPage/>
+    },
 ]
 
 export function MyRouter() {

@@ -2,10 +2,8 @@ package com.taskmanager.controller;
 
 import com.taskmanager.dto.TaskRequestDto;
 import com.taskmanager.dto.TaskResponseDto;
-import com.taskmanager.entity.Task;
 import com.taskmanager.service.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.task.TaskRejectedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

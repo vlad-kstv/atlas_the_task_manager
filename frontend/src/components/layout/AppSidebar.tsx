@@ -69,7 +69,7 @@ export default function AppSidebar() {
                     {fetchedProjects.map((project) => (
                       <SidebarMenuSubItem key={project.id}>
                         <SidebarMenuSubButton asChild>
-                          <a href={`projects/${project.id}`}>
+                          <a href={`/projects/${project.id}`}>
                             <span>{project.name}</span>
                           </a>
                         </SidebarMenuSubButton>
