@@ -66,13 +66,15 @@ export default function AppSidebar() {
 
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="#">
-                          <span>BramBits</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
+                    {fetchedProjects.map((project) => (
+                      <SidebarMenuSubItem key={project.id}>
+                        <SidebarMenuSubButton asChild>
+                          <a href={`projects/${project.id}`}>
+                            <span>{project.name}</span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
 
                     <SidebarMenuSubItem className="cursor-pointer">
                       <SidebarMenuSubButton>
