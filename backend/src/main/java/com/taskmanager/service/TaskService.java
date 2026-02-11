@@ -2,9 +2,11 @@ package com.taskmanager.service;
 
 import com.taskmanager.dto.TaskRequestDto;
 import com.taskmanager.dto.TaskResponseDto;
+import com.taskmanager.entity.Project;
 import com.taskmanager.entity.Task;
 import com.taskmanager.entity.User;
 import com.taskmanager.mapper.TaskMapper;
+import com.taskmanager.repository.ProjectRepository;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,11 +27,16 @@ public class TaskService {
     private final TaskRepository repository;
     private final TaskMapper mapper;
     private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
 
     @Transactional
     public TaskResponseDto createTask(TaskRequestDto dto) {
         log.debug("Attempting to create a task with title: {}", dto.getTitle());
         Task task = mapper.toEntity(dto);
+        Long projectId = task.getProject().getId();
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("Project with id:" + projectId + " not found"));
+        task.setProject(project);
+        task.generateTaskNumber();
         Task savedTask = repository.save(task);
         log.info("Successfully created task with id: {}", savedTask.getId());
         return mapper.toDto(task);

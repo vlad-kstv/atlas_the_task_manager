@@ -22,6 +22,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String displayedUniqueId;
     private String title;
     private String description;
     @Enumerated(EnumType.STRING)
@@ -43,4 +44,8 @@ public class Task {
     @UpdateTimestamp
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
+
+    public void generateTaskNumber() {
+        this.displayedUniqueId = this.project.getProjectKey() + "-" + this.project.returnTaskCounter();
+    }
 }

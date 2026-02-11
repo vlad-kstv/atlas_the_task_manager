@@ -11,14 +11,13 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    @Mapping(target = "projectId", source = "project.id")
     @Mapping(target = "authorId", source = "author.id")
     @Mapping(target = "assigneeId", source = "assignee.id")
     TaskResponseDto toDto(Task task);
 
-    @Mapping(target = "project", source = "projectId", qualifiedByName = "idToProject")
     @Mapping(target = "author", source = "authorId", qualifiedByName = "idToUser")
     @Mapping(target = "assignee", source = "assigneeId", qualifiedByName = "idToUser")
+    @Mapping(target = "project", source = "projectId", qualifiedByName = "idToProject")
     Task toEntity(TaskRequestDto dto);
 
     @Mapping(target = "id", ignore = true)

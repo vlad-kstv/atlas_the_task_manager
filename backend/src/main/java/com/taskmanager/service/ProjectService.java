@@ -29,7 +29,14 @@ public class ProjectService {
     @Transactional
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
+
+        if (dto.getName() != null && dto.getName().trim().length() >= 3) {
+            log.warn("Validation failed: Project name '{}' is too short", dto.getName());
+            throw new IllegalArgumentException("Name of the project has to be at least 3 characters long");
+        }
+
         Project project = mapper.toEntity(dto);
+        project.generateProjectKey();
         Project savedProject = repository.save(project);
         ProjectMembership createdMembership = projectMembershipService.createProjectMembership(userService.getCurrentUser(), savedProject);
         log.info("Successfully created a new project membership with id {}", createdMembership.getId());
