@@ -30,7 +30,7 @@ public class ProjectService {
     public ProjectResponseDto createProject(ProjectRequestDto dto) {
         log.debug("Attempting to create a project with name {}", dto.getName());
 
-        if (dto.getName() != null && dto.getName().trim().length() >= 3) {
+        if (dto.getName().length() < 3) {
             log.warn("Validation failed: Project name '{}' is too short", dto.getName());
             throw new IllegalArgumentException("Name of the project has to be at least 3 characters long");
         }

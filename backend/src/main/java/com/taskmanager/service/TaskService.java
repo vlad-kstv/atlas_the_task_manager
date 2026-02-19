@@ -10,7 +10,6 @@ import com.taskmanager.repository.ProjectRepository;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.TransactionScoped;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
