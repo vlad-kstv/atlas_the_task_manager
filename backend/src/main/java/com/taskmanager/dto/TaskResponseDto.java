@@ -4,13 +4,17 @@ import com.taskmanager.enums.Priority;
 import com.taskmanager.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskResponseDto {
-    @NotBlank
+    @NotNull(message = "Id cannot be null")
     private Long id;
-    private Long taskNumber;
+    private String displayedUniqueId;
     @NotBlank(message = "Title cannot be empty")
     private String title;
     private String description;

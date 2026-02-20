@@ -1,5 +1,6 @@
 import { TaskService } from "@/api/taskService";
-import type { taskResponseDto } from "@/types/task";
+import { DataTable } from "@/components/DataTable";
+import { columns, type taskResponseDto } from "@/types/task";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 
@@ -8,7 +9,7 @@ export default function ProjectPage() {
     const { id } = useParams();
 
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchTasks = async () => {
             const numericId = Number(id);
 
             if (!isNaN(numericId)) {
@@ -20,11 +21,12 @@ export default function ProjectPage() {
             }
         }
     
-        fetchProjects();
+        fetchTasks();
     }, [])
 
     return (
-        <>
-        </>
+        <div className="flex items-center">
+            <DataTable columns={columns} data={tasks} />
+        </div>
     )
 }
