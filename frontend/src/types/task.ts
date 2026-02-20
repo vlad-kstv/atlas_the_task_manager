@@ -5,8 +5,8 @@ export interface taskResponseDto {
     displayedUniqueId : number,
     title : string,
     description : string,
-    status : Status,
-    priority : Priority,
+    status : StatusKey,
+    priority : PriorityKey,
     projectId : number,
     authorId : number,
     assigneeId: number,
@@ -14,13 +14,13 @@ export interface taskResponseDto {
     updatedAt : string
 }
 
-const Status = {
+export const Status = {
     TO_DO: "To-do",
     IN_PROGRESS: "In Progress",
     DONE: "Done"
 } as const;
 
-export type Status = typeof Status[keyof typeof Status];
+export type StatusKey = keyof typeof Status;
 
 const Priority = {
     LOW: "Low",
@@ -28,7 +28,7 @@ const Priority = {
     HIGH: "High",
 }
 
-export type Priority = typeof Priority[keyof typeof Priority];
+export type PriorityKey = keyof typeof Priority;
 
 export const columns: ColumnDef<taskResponseDto>[] = [
     {
@@ -42,10 +42,18 @@ export const columns: ColumnDef<taskResponseDto>[] = [
     {
         accessorKey: "status",
         header: "Status",
+        cell: ({ row }) => {
+            const statusKey = row.getValue("status") as StatusKey;
+            return Status[statusKey];
+        }
     },
     {
         accessorKey: "priority",
         header: "Priority",
+        cell: ({ row }) => {
+            const piorityKey = row.getValue("priority") as PriorityKey;
+            return Priority[piorityKey];
+        }
     },
     {
         accessorKey: "assigneeId",

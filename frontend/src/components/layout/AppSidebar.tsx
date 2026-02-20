@@ -1,4 +1,4 @@
-import { Home, Folder, Settings, MoreHorizontal, ChevronDown, Plus } from "lucide-react" // Иконки
+import { Home, Folder, Settings, Plus } from "lucide-react" // Иконки
 import {
   Sidebar,
   SidebarContent,
@@ -8,7 +8,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -17,7 +16,6 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import { useEffect, useState } from "react"
 import { ProjectService } from "@/api/projectService"

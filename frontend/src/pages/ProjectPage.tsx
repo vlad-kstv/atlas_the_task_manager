@@ -20,9 +20,9 @@ export default function ProjectPage() {
                 console.error("Project Id is not a number"); 
             }
         }
-    
+        
         fetchTasks();
-    }, [])
+    }, []);
 
     return (
         <div className="flex items-center">
