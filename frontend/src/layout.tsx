@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex flex-row">
+      <main className="flex flex-row w-full min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
         <SidebarTrigger />
         <Outlet />
       </main>
