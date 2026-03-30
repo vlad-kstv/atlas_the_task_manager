@@ -25,7 +25,7 @@ export default function ProjectPage() {
         fetchTasks();
     }, []);
 
-    const completedTasks = tasks.filter(t => t.completed).length;
+    const completedTasks = 0; //TODO
     const completionRate = tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0;
 
     return (
