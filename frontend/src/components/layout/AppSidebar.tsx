@@ -17,7 +17,7 @@ import {
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { ProjectService } from "@/api/projectService"
 import type { projectResponseDto } from "@/types/project"
 
@@ -40,7 +40,7 @@ export default function AppSidebar() {
     }
 
     fetchProjects();
-  }, [])
+  }, []);
 
   return (
     <Sidebar>
@@ -76,7 +76,7 @@ export default function AppSidebar() {
 
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {fetchedProjects.map((project) => (
+                    {fetchedProjects.slice(0, 4).map((project) => (
                       <SidebarMenuSubItem key={project.id}>
                         <SidebarMenuSubButton asChild className="hover:bg-slate-100 transition-colors hover:text-blue-600">
                           <a href={`/projects/${project.id}`}>
@@ -87,12 +87,28 @@ export default function AppSidebar() {
                       </SidebarMenuSubItem>
                     ))}
 
-                    <SidebarMenuSubItem className="cursor-pointer">
-                      <SidebarMenuSubButton className="hover:bg-slate-100 transition-colors hover:text-blue-600 text-slate-500">
-                        <Plus className="h-4 w-4" />
-                        <span>More spaces</span>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
+                    {fetchedProjects.length > 4 && (
+                      <div>
+                        <SidebarMenuSubItem
+                          className="cursor-pointer"
+                        >
+                          <SidebarMenuSubButton className="hover:bg-slate-100 transition-colors hover:text-blue-600 text-slate-500">
+                            <Plus className="h-4 w-4" />
+                            <span>More spaces</span>
+                          </SidebarMenuSubButton>
+                          {fetchedProjects.slice(4, fetchedProjects.length).map((project) => (
+                            <SidebarMenuSubItem key={project.id}>
+                              <SidebarMenuSubButton asChild className="hover:bg-slate-100 transition-colors hover:text-blue-600">
+                                <a href={`/projects/${project.id}`}>
+                                  <div className="h-1.5 w-1.5 rounded-full bg-blue-400"></div>
+                                  <span>{project.name}</span>
+                                </a>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          ))}
+                        </SidebarMenuSubItem>
+                      </div>
+                    )}
                   </SidebarMenuSub>
                 </CollapsibleContent>
 
